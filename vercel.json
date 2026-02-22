@@ -1,0 +1,10 @@
+{
+    "rewrites": [
+      { "source": "/openai/(.*)", "destination": "https://api.openai.com/$1" },
+      { "source": "/claude/(.*)", "destination": "https://api.anthropic.com/$1" },
+      { "source": "/gemini/(.*)", "destination": "https://generativelanguage.googleapis.com/$1" }
+    ]
+  }
+  
+  
+  
