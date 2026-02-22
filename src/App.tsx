@@ -20,7 +20,7 @@ interface Quote {
 
 async function callAI(provider: Provider, apiKey: string, systemPrompt: string, userMessage: string): Promise<string> {
   if (provider === 'openai') {
-    const res = await fetch('/openai/v1/chat/completions', {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({
@@ -35,9 +35,14 @@ async function callAI(provider: Provider, apiKey: string, systemPrompt: string, 
   }
 
   if (provider === 'claude') {
-    const res = await fetch('/claude/v1/messages', {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: { 
+        'Content-Type': 'application/json', 
+        'x-api-key': apiKey, 
+        'anthropic-version': '2023-06-01', 
+        'anthropic-dangerous-direct-browser-access': 'true' 
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 4000,
@@ -51,7 +56,7 @@ async function callAI(provider: Provider, apiKey: string, systemPrompt: string, 
   }
 
   if (provider === 'gemini') {
-    const res = await fetch(`/gemini/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -148,7 +153,6 @@ End with: QUOTES_JSON:{"quotes":[{"id":"q1","quote":"text","source":"doc name","
           <p style={{ margin: '6px 0 0', color: '#475569' }}>Paste Hebrew/English documents · Query · Get exact source-grounded quotes</p>
         </header>
 
-        {/* API Settings */}
         <div style={{ background: '#fff', border: '1px solid #cbd5e1', borderRadius: 12, padding: 20, marginBottom: 24 }}>
           <h2 style={{ marginTop: 0, fontSize: 16 }}>AI Provider & API Key</h2>
           <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
@@ -159,19 +163,13 @@ End with: QUOTES_JSON:{"quotes":[{"id":"q1","quote":"text","source":"doc name","
               </button>
             ))}
           </div>
-          <input
-            type="password"
-            value={apiKey}
-            onChange={e => setApiKey(e.target.value)}
+          <input type="password" value={apiKey} onChange={e => setApiKey(e.target.value)}
             placeholder={`Enter your ${providerLabels[provider]} API key...`}
-            style={{ width: '100%', border: '1px solid #cbd5e1', borderRadius: 6, padding: '10px 12px', fontSize: 13, boxSizing: 'border-box' }}
-          />
+            style={{ width: '100%', border: '1px solid #cbd5e1', borderRadius: 6, padding: '10px 12px', fontSize: 13, boxSizing: 'border-box' }} />
           {!apiKey.trim() && <p style={{ fontSize: 12, color: '#f59e0b', marginTop: 6 }}>⚠️ Enter your API key to run queries.</p>}
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 24 }}>
-
-          {/* LEFT */}
           <div>
             <div style={{ background: '#fff', border: '1px solid #cbd5e1', borderRadius: 12, padding: 20, marginBottom: 16 }}>
               <h2 style={{ marginTop: 0, fontSize: 16 }}>Add Document Text</h2>
@@ -204,7 +202,6 @@ End with: QUOTES_JSON:{"quotes":[{"id":"q1","quote":"text","source":"doc name","
             </div>
           </div>
 
-          {/* RIGHT */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ background: '#fff', border: '1px solid #cbd5e1', borderRadius: 12, padding: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
@@ -233,7 +230,6 @@ End with: QUOTES_JSON:{"quotes":[{"id":"q1","quote":"text","source":"doc name","
           </div>
         </div>
 
-        {/* Quotes */}
         <div style={{ marginTop: 24, background: '#fff', border: '1px solid #cbd5e1', borderRadius: 12, padding: 20 }}>
           <h2 style={{ marginTop: 0, fontSize: 16 }}>Quote Candidates</h2>
           {quotes.length === 0
