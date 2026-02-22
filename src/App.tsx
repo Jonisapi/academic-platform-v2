@@ -150,7 +150,12 @@ End with: QUOTES_JSON:{"quotes":[{"id":"q1","quote":"text","source":"doc name","
 
         <header style={{ borderBottom: '2px solid #1e293b', paddingBottom: 16, marginBottom: 24 }}>
           <h1 style={{ margin: 0, fontSize: 26 }}>📚 Academic Source Platform</h1>
-          <p style={{ margin: '6px 0 0', color: '#475569' }}>Paste Hebrew/English documents · Query · Get exact source-grounded quotes</p>
+          <p style={{ margin: '6px 0 0', color: '#475569' }}>Paste Hebrew/English documents · Query · Get exact grounded quotes · v3</p>
+```
+
+Press **Ctrl+S**, then:
+```
+git status
         </header>
 
         <div style={{ background: '#fff', border: '1px solid #cbd5e1', borderRadius: 12, padding: 20, marginBottom: 24 }}>
